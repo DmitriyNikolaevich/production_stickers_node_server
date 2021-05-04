@@ -24,7 +24,7 @@ exports.startNumber = (req, res) => {
 
 exports.getLocation = (req, res) => {
 
-    const id = req.query.id === NaN ? req.query.id : 1
+    const id = isNaN(req.query.id) ? 1 : req.query.id
 
     const sql = `CALL get_location(${id})`
 
