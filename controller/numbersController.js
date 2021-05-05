@@ -146,3 +146,18 @@ exports.getCopyCountForLocation = (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
 }
+
+exports.getFilteredLocations = (req,res) => {
+
+    const data = Number(req.params.selectedLPU)
+
+    const sql = `CALL get_filtered_locations(${data})`
+
+    db.query(sql, (error, rows, fields) => {
+        if (error) {
+            console.log(error)
+        } else {
+            response.status(rows, res)
+        }
+    })
+}

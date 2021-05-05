@@ -12,4 +12,5 @@ module.exports = (app) => {
     app.route('/deletelocation/:id').delete(numbersController.deleteLocation)
     app.route('/locationcopycount/:id').get(numbersController.getLocationCopyCount)
     app.route('/getcopycountforlocation/:id').get(numbersController.getCopyCountForLocation)
+    app.route('/getfilteredlocations/:selectedLPU').get(numbersController.getFilteredLocations)
 }
