@@ -1,0 +1,26 @@
+-- 
+-- Set character set the client will use to send SQL statements to the server
+--
+SET NAMES 'utf8';
+
+--
+-- Set default database
+--
+USE stickers;
+
+--
+-- Create table `locations`
+--
+CREATE TABLE locations (
+  id int NOT NULL AUTO_INCREMENT,
+  lpu int NOT NULL COMMENT 'ID from table ''lpu''',
+  location varchar(255) NOT NULL,
+  copy int NOT NULL DEFAULT 2,
+  batchAccess tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 15,
+AVG_ROW_LENGTH = 4096,
+CHARACTER SET utf8mb4,
+COLLATE utf8mb4_0900_ai_ci;

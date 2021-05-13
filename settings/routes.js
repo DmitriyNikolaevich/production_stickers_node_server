@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     const numbersController = require('../controller/numbersController')
 
-    app.route(`/startNumber`).get(numbersController.startNumber)
+    app.route(`/startNumber/:data`).get(numbersController.startNumber)
     app.route('/getLocation').get(numbersController.getLocation)
     app.route('/getlpu').get(numbersController.getLPU)
     app.route('/getalllocations').get(numbersController.getAllLocations)
@@ -13,4 +13,5 @@ module.exports = (app) => {
     app.route('/locationcopycount/:id').get(numbersController.getLocationCopyCount)
     app.route('/getcopycountforlocation/:id').get(numbersController.getCopyCountForLocation)
     app.route('/getfilteredlocations/:selectedLPU').get(numbersController.getFilteredLocations)
+    app.route('/getuserbatchaccess/:id').get(numbersController.getUserBatchAccess)
 }

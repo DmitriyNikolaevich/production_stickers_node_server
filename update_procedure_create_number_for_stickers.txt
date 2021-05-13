@@ -1,0 +1,59 @@
+-- 
+-- Set character set the client will use to send SQL statements to the server
+--
+SET NAMES 'utf8';
+
+--
+-- Set default database
+--
+USE stickers;
+
+--
+-- Drop procedure `create_number_for_stickers`
+--
+DROP PROCEDURE IF EXISTS create_number_for_stickers;
+
+--
+-- Set default database
+--
+USE stickers;
+
+DELIMITER $$
+
+--
+-- Create procedure `create_number_for_stickers`
+--
+CREATE
+DEFINER = 'root'@'localhost'
+PROCEDURE create_number_for_stickers (id_number int, copy_number int)
+BEGIN
+
+  DECLARE i int DEFAULT 0;
+
+  SELECT
+    number
+  FROM numbers
+  WHERE id = (SELECT
+      MAX(id)
+    FROM numbers) LIMIT 1 INTO @a;
+
+  WHILE i < copy_number DO
+
+    SET i = i + 1;
+
+    INSERT INTO numbers (number, date, location)
+      VALUES (@a + i, NOW(), id_number);
+
+  END WHILE;
+
+  SELECT
+    number
+  FROM numbers
+  WHERE id = (SELECT
+      MAX(id)
+    FROM numbers) LIMIT 1;
+
+END
+$$
+
+DELIMITER ;

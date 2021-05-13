@@ -5,9 +5,9 @@ const db =require('../settings/db')
 
 exports.startNumber = (req, res) => {
 
-    const id = req.query.id
+    const data = JSON.parse(req.params.data)
     
-    const sql = `CALL create_number_for_stickers(${id})`
+    const sql = `CALL create_number_for_stickers(${data.id}, ${data.copy})`
 
     db.query(sql, (error, rows, fields) => {
         if (error) {
@@ -160,4 +160,25 @@ exports.getFilteredLocations = (req,res) => {
             response.status(rows, res)
         }
     })
+
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
+    
+}
+
+exports.getUserBatchAccess = (req, res) => {
+    
+    const sql = `SELECT batchAccess FROM locations WHERE id = ${req.params.id}`
+
+    db.query(sql, (error, rows, fields) => {
+        if (error) {
+            console.log(error)
+        } else {
+            response.status(rows, res)
+        }
+    })
+
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
+
 }
