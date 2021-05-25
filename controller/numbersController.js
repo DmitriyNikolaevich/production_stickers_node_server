@@ -13,7 +13,7 @@ exports.startNumber = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0][0].number, res)
         }
     })
 
@@ -33,7 +33,7 @@ exports.getLocation = (req, res) => {
         if (error) {
             console.log(`Curent number select ERROR ${error}`)
         } else {
-            response.status(rows, res)
+            response.status(rows[0][0], res)
         }
     })
 
@@ -50,7 +50,7 @@ exports.getLPU = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0], res)
         }
     })
 
@@ -65,7 +65,7 @@ exports.getAllLocations = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0], res)
         }
     })
 
@@ -139,7 +139,7 @@ exports.getCopyCountForLocation = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0].copy, res)
         }
     })
 
@@ -157,7 +157,8 @@ exports.getFilteredLocations = (req,res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            debugger
+            response.status(rows[0], res)
         }
     })
 
@@ -174,7 +175,7 @@ exports.getUserBatchAccess = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0].batchAccess, res)
         }
     })
 
