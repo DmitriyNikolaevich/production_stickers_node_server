@@ -20,20 +20,41 @@ exports.startNumber = (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept')
 
-};
+}
 
 exports.getLocation = (req, res) => {
 
     const id = isNaN(req.query.id) ? 1 : req.query.id
 
     const sql = `CALL get_location(${id})`
+    const accesssql = `SELECT batch, operativStatisticViewAccess FROM user_access WHERE user_id = ${id}`
+
+    let answer = {
+        location: {},
+        access: {
+            batch: false,
+            operativStatisticViewAccess: false
+        }
+    }
 
     db.query(sql, (error, rows, fields) => {
 
         if (error) {
             console.log(`Curent number select ERROR ${error}`)
         } else {
-            response.status(rows[0][0], res)
+
+            answer.location = rows[0][0]
+
+            db.query(accesssql, (error, rows, fields) => {
+                if (error) {
+                    console.log(error)
+                } else {
+                    answer.access.batch = Boolean(rows[0].batch)
+                    answer.access.operativStatisticViewAccess = Boolean(rows[0].operativStatisticViewAccess)
+
+                    response.status(answer, res)
+                }
+            })
         }
     })
 
@@ -85,7 +106,7 @@ exports.putNewLocation = (req, res) => {
         if (error) {
             console.log(`Curent number select ERROR ${error}`)
         } else {
-            response.status(rows, res)
+            response.status(rows.affectedRows, res)
         }
     })
 
@@ -104,7 +125,7 @@ exports.deleteLocation = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows.affectedRows, res)
         }
     })
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -121,7 +142,7 @@ exports.getLocationCopyCount = (req, res) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows, res)
+            response.status(rows[0][0].copy, res)
         }
     })
 
@@ -157,7 +178,6 @@ exports.getFilteredLocations = (req,res) => {
         if (error) {
             console.log(error)
         } else {
-            debugger
             response.status(rows[0], res)
         }
     })
@@ -167,15 +187,16 @@ exports.getFilteredLocations = (req,res) => {
     
 }
 
-exports.getUserBatchAccess = (req, res) => {
+exports.getUserAccess = (req, res) => {         //записывает права доступа пользователя к модулям
     
-    const sql = `SELECT batchAccess FROM locations WHERE id = ${req.params.id}`
+    const sql = `SELECT batch, operativStatisticViewAccess FROM user_access WHERE user_id = ${req.params.id}`
 
     db.query(sql, (error, rows, fields) => {
         if (error) {
             console.log(error)
         } else {
-            response.status(rows[0].batchAccess, res)
+            debugger
+            response.status(rows, res)
         }
     })
 

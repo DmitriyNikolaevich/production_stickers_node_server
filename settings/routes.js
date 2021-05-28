@@ -13,5 +13,5 @@ module.exports = (app) => {
     app.route('/locationcopycount/:id').get(numbersController.getLocationCopyCount)
     app.route('/getcopycountforlocation/:id').get(numbersController.getCopyCountForLocation)
     app.route('/getfilteredlocations/:selectedLPU').get(numbersController.getFilteredLocations)
-    app.route('/getuserbatchaccess/:id').get(numbersController.getUserBatchAccess)
+    app.route('/getuseraccess/:id').get(numbersController.getUserAccess)            //получает права доступа пользователя к модулям
 }
