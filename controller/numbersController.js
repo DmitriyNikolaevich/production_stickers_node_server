@@ -4,11 +4,11 @@ const response = require('../response')
 const db =require('../settings/db')
 
 exports.startNumber = (req, res) => {
-
+    
     const data = JSON.parse(req.params.data)
     
     const sql = `CALL create_number_for_stickers(${data.id}, ${data.copy})`
-
+    
     db.query(sql, (error, rows, fields) => {
         if (error) {
             console.log(error)
